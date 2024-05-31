@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "me.zaksen.damageful.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+  ],
+  "client": [
+    "EntityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

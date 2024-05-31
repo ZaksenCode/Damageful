@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "damageful",
+  "version": "${version}",
+  "name": "Damageful",
+  "description": "",
+  "authors": [
+    "Zaksen_"
+  ],
+  "contact": {
+    "repo": "https://github.com/zaksen/Damageful"
+  },
+  "license": "MIT",
+  "icon": "assets/damageful/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "me.zaksen.damageful.client.DamagefulClient"
+    ],
+    "modmenu": [
+      "me.zaksen.damageful.modmenu.ModmenuImpl"
+    ]
+  },
+  "mixins": [
+    "damageful.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
