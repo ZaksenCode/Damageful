@@ -52,10 +52,6 @@ public class TextParticle extends Particle {
         Matrix4f scale = Matrix4f.scale(-size, -size, -size);
         matrix.multiply(scale);
 
-//        matrix = matrix.translation(particleX, particleY, particleZ);
-//        matrix = matrix.rotate(camera.getRotation());
-//        matrix = matrix.scale(-size, -size, -size);
-
         var textRenderer = MinecraftClient.getInstance().textRenderer;
         var vertexConsumerProvider = VertexConsumerProvider.immediate(Tessellator.getInstance().getBuffer());
 
