@@ -36,7 +36,7 @@ public class TextParticle extends Particle {
         this.velocityMultiplier = velocityMultiplier;
         this.gravityStrength = gravityStrength;
         this.maxAge = maxAgeTicks;
-        this.size = 0.0025f * scale;
+        this.size = 0.03f * scale;
         this.drawShadow = drawShadow;
     }
 
