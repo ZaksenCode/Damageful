@@ -29,5 +29,8 @@
   "screen.damageful.config.lowest_damage_color": "Цвет самого низкого урона",
   "screen.damageful.config.lowest_damage_color.tooltip": "Цвет для урона 0",
   "screen.damageful.config.highest_damage_color": "Цвет самого высокого урона",
-  "screen.damageful.config.highest_damage_color.tooltip": "Цвет для урона по уровню моба получающего урона"
+  "screen.damageful.config.highest_damage_color.tooltip": "Цвет для урона по уровню моба получающего урона",
+
+  "category.damageful": "Damageful",
+  "key.damageful.config_screen": "Меню конфига"
 }

@@ -1,6 +1,7 @@
 package me.zaksen.damageful.client;
 
 import me.zaksen.damageful.callback.Callbacks;
+import me.zaksen.damageful.keybind.CustomKeyBindingContainer;
 import me.zaksen.damageful.option.Options;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.client.MinecraftClient;
@@ -17,5 +18,6 @@ public class DamagefulClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         new Callbacks();
+        new CustomKeyBindingContainer();
     }
 }

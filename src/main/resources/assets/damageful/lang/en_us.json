@@ -29,5 +29,8 @@
   "screen.damageful.config.lowest_damage_color": "Lowest damage color",
   "screen.damageful.config.lowest_damage_color.tooltip": "Color for damage 0",
   "screen.damageful.config.highest_damage_color": "Highest damage color",
-  "screen.damageful.config.highest_damage_color.tooltip": "Color for damage according to the level of the monster taking the damage"
+  "screen.damageful.config.highest_damage_color.tooltip": "Color for damage according to the level of the monster taking the damage",
+
+  "category.damageful": "Damageful",
+  "key.damageful.config_screen": "Config menu"
 }

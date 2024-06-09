@@ -173,7 +173,7 @@ public class Options {
         public Vec3d velocity = new Vec3d(0.5, 0.25, 0.5);
         public Vec3d offset = new Vec3d(0, 0.25, 0);
         public float scale = 1.0f;
-        public boolean drawShadow = true;
+        public boolean drawShadow = false;
         public CustomColor lowestDamageColor = new CustomColor(255, 255, 0, 0);
         public CustomColor highestDamageColor = new CustomColor(255, 0, 255, 0);
     }
