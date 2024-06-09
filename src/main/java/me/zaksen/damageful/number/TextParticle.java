@@ -60,7 +60,7 @@ public class TextParticle extends Particle {
 
         int textColor = new Color(red, green, blue, alpha).getRGB();
 
-        textRenderer.draw(text, textX, textY, textColor, drawShadow, matrix, vertexConsumerProvider, TextRenderer.TextLayerType.NORMAL, 0, 15728880);
+        textRenderer.draw(text, textX, textY, textColor, drawShadow, matrix, vertexConsumerProvider, false, 0, 15728880);
         vertexConsumerProvider.draw();
     }
 
