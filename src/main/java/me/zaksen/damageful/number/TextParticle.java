@@ -10,8 +10,8 @@ import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.text.Text;
+import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3d;
-import org.joml.Matrix4f;
 
 import java.awt.*;
 
@@ -48,9 +48,12 @@ public class TextParticle extends Particle {
         float particleZ = (float) (prevPosZ + (z - prevPosZ) * tickDelta - cameraPos.z);
 
         Matrix4f matrix = new Matrix4f();
-        matrix = matrix.translation(particleX, particleY, particleZ);
-        matrix = matrix.rotate(camera.getRotation());
-        matrix = matrix.scale(-size, -size, -size);
+        matrix.multiplyByTranslation(particleX, particleY, particleZ);
+        matrix.multiply(camera.getRotation());
+
+//        matrix = matrix.translation(particleX, particleY, particleZ);
+//        matrix = matrix.rotate(camera.getRotation());
+//        matrix = matrix.scale(-size, -size, -size);
 
         var textRenderer = MinecraftClient.getInstance().textRenderer;
         var vertexConsumerProvider = VertexConsumerProvider.immediate(Tessellator.getInstance().getBuffer());
@@ -60,7 +63,7 @@ public class TextParticle extends Particle {
 
         int textColor = new Color(red, green, blue, alpha).getRGB();
 
-        textRenderer.draw(text, textX, textY, textColor, drawShadow, matrix, vertexConsumerProvider, TextRenderer.TextLayerType.NORMAL, 0, 15728880);
+        textRenderer.draw(text, textX, textY, textColor, drawShadow, matrix, vertexConsumerProvider, false, 0, 15728880);
         vertexConsumerProvider.draw();
     }
 
