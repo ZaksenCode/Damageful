@@ -12,6 +12,7 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3f;
 
 import java.awt.*;
 
@@ -49,8 +50,7 @@ public class TextParticle extends Particle {
 
         Matrix4f matrix = Matrix4f.translate(particleX, particleY, particleZ);
         matrix.multiply(camera.getRotation());
-        Matrix4f scale = Matrix4f.scale(-size, -size, -size);
-        matrix.multiply(scale);
+        matrix.multiply(Matrix4f.scale(-size, -size, -size));
 
         var textRenderer = MinecraftClient.getInstance().textRenderer;
         var vertexConsumerProvider = VertexConsumerProvider.immediate(Tessellator.getInstance().getBuffer());
