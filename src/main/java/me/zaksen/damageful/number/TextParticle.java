@@ -35,7 +35,7 @@ public class TextParticle extends Particle {
         this.velocityMultiplier = velocityMultiplier;
         this.gravityStrength = gravityStrength;
         this.maxAge = maxAgeTicks;
-        this.size = 0.03f * scale;
+        this.size = 0.0025f * scale;
         this.drawShadow = drawShadow;
     }
 
@@ -47,9 +47,10 @@ public class TextParticle extends Particle {
         float particleY = (float) (prevPosY + (y - prevPosY) * tickDelta - cameraPos.y);
         float particleZ = (float) (prevPosZ + (z - prevPosZ) * tickDelta - cameraPos.z);
 
-        Matrix4f matrix = new Matrix4f();
-        matrix.multiplyByTranslation(particleX, particleY, particleZ);
+        Matrix4f matrix = Matrix4f.translate(particleX, particleY, particleZ);
         matrix.multiply(camera.getRotation());
+        Matrix4f scale = Matrix4f.scale(-size, -size, -size);
+        matrix.multiply(scale);
 
 //        matrix = matrix.translation(particleX, particleY, particleZ);
 //        matrix = matrix.rotate(camera.getRotation());
