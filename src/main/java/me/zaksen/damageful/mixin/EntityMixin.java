@@ -13,12 +13,6 @@ public abstract class EntityMixin {
 
     @Inject(at = @At("TAIL"), method = "damage")
     public void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
-
-        if(cir.getReturnValue()) {
-            EntityDamagedCallback.EVENT.invoker().interact((LivingEntity) (Object) this, source, amount, false);
-            return;
-        }
-
-        EntityDamagedCallback.EVENT.invoker().interact((LivingEntity) (Object) this, source, amount, true);
+        EntityDamagedCallback.EVENT.invoker().damage((LivingEntity) (Object) this, source, amount, !cir.getReturnValue());
     }
 }

@@ -63,4 +63,20 @@ public class CustomColor {
     public Color toColor() {
         return new Color(alpha / 255f, red / 255f, green / 255f, blue / 255f);
     }
+
+    public CustomColor gradient(CustomColor color2, float progress) {
+        float alphaProgress = getAlpha() + progress * (color2.getAlpha() - getAlpha());
+        float redProgress = getRed() + progress * (color2.getRed() - getRed());
+        float greenProgress = getGreen() + progress * (color2.getGreen() - getGreen());
+        float blueProgress = getBlue() + progress * (color2.getBlue() - getBlue());
+        return new CustomColor(alphaProgress / 255f, redProgress / 255f, greenProgress / 255f, blueProgress / 255f);
+    }
+
+    public static CustomColor gradient(CustomColor color1, CustomColor color2, float progress) {
+        float alphaProgress = color1.getAlpha() + progress * (color2.getAlpha() - color1.getAlpha());
+        float redProgress = color1.getRed() + progress * (color2.getRed() - color1.getRed());
+        float greenProgress = color1.getGreen() + progress * (color2.getGreen() - color1.getGreen());
+        float blueProgress = color1.getBlue() + progress * (color2.getBlue() - color1.getBlue());
+        return new CustomColor(alphaProgress / 255f, redProgress / 255f, greenProgress / 255f, blueProgress / 255f);
+    }
 }
