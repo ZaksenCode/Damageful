@@ -16,12 +16,8 @@ public class Callbacks {
     }
 
     private void registerDamageCallback() {
-        EntityDamagedCallback.EVENT.register(((entity, source, damage, isBlocked) -> {
+        EntityDamagedCallback.EVENT.register(((entity, damage) -> {
             if(!OPTIONS_DATA.isEnabled()) {
-                return ActionResult.PASS;
-            }
-
-            if(isBlocked) {
                 return ActionResult.PASS;
             }
 
