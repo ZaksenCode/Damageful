@@ -16,12 +16,8 @@ public class Callbacks {
     }
 
     private void registerDamageCallback() {
-        EntityDamagedCallback.EVENT.register(((entity, source, damage, isBlocked) -> {
+        EntityDamagedCallback.EVENT.register(((entity, damage) -> {
             if(!OPTIONS_DATA.isEnabled()) {
-                return ActionResult.PASS;
-            }
-
-            if(isBlocked) {
                 return ActionResult.PASS;
             }
 
@@ -39,7 +35,7 @@ public class Callbacks {
                 return ActionResult.PASS;
             }
 
-            float damageScale = Math.min(damage / entity.getMaxHealth(), 0.99f);
+            float damageScale = Math.max(0, Math.min(damage / entity.getMaxHealth(), 1.0f));
             float damagePercentage = (float) Math.floor(damageScale * 100);
             String text = getText(damage, damagePercentage);
 
