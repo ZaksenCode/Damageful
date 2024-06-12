@@ -16,12 +16,8 @@ public class Callbacks {
     }
 
     private void registerDamageCallback() {
-        EntityDamagedCallback.EVENT.register(((entity, source, damage, isBlocked) -> {
+        EntityDamagedCallback.EVENT.register(((entity, damage) -> {
             if(!OPTIONS_DATA.isEnabled()) {
-                return ActionResult.PASS;
-            }
-
-            if(isBlocked) {
                 return ActionResult.PASS;
             }
 
@@ -56,7 +52,7 @@ public class Callbacks {
             float gravityStrength = OPTIONS_DATA.getGravityStrength();
             int maxAge = OPTIONS_DATA.getLifeTime();
 
-            CustomColor textColor = gradient(OPTIONS_DATA.getLowestDamageColor(), OPTIONS_DATA.getHighestDamageColor(), damageScale);
+            CustomColor textColor = OPTIONS_DATA.getLowestDamageColor().gradient(OPTIONS_DATA.getHighestDamageColor(), damageScale);
 
             TextParticle particle = TextParticle.create()
             .text(Text.of(text))
@@ -98,13 +94,5 @@ public class Callbacks {
         }
 
         return text;
-    }
-
-    private CustomColor gradient(CustomColor color1, CustomColor color2, float progress) {
-        float alphaProgress = color1.getAlpha() + progress * (color2.getAlpha() - color1.getAlpha());
-        float redProgress = color1.getRed() + progress * (color2.getRed() - color1.getRed());
-        float greenProgress = color1.getGreen() + progress * (color2.getGreen() - color1.getGreen());
-        float blueProgress = color1.getBlue() + progress * (color2.getBlue() - color1.getBlue());
-        return new CustomColor(alphaProgress / 255f, redProgress / 255f, greenProgress / 255f, blueProgress / 255f);
     }
 }
