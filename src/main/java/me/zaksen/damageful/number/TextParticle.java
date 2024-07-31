@@ -1,7 +1,7 @@
 package me.zaksen.damageful.number;
 
+import io.wispforest.owo.ui.core.Color;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleTextureSheet;
 import net.minecraft.client.render.Camera;
@@ -12,27 +12,22 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3f;
-
-import java.awt.*;
 
 public class TextParticle extends Particle {
 
     private final Text text;
     private final float size;
     private final boolean drawShadow;
+    private final Color color;
 
     public static Builder create() {
         return new Builder();
     }
 
-    protected TextParticle(ClientWorld world, Vec3d pos, Vec3d velocity, Text text, float alpha, float red, float green, float blue, float velocityMultiplier, float gravityStrength, int maxAgeTicks, float scale, boolean drawShadow) {
+    protected TextParticle(ClientWorld world, Vec3d pos, Vec3d velocity, Text text, Color color, float velocityMultiplier, float gravityStrength, int maxAgeTicks, float scale, boolean drawShadow) {
         super(world, pos.x, pos.y, pos.z, velocity.x, velocity.y, velocity.z);
         this.text = text;
-        this.alpha = alpha;
-        this.red = red;
-        this.green = green;
-        this.blue = blue;
+        this.color = color;
         this.velocityMultiplier = velocityMultiplier;
         this.gravityStrength = gravityStrength;
         this.maxAge = maxAgeTicks;
@@ -58,7 +53,7 @@ public class TextParticle extends Particle {
         float textX = textRenderer.getWidth(text) / -2.0F;
         float textY = 0.0F;
 
-        int textColor = new Color(red, green, blue, alpha).getRGB();
+        int textColor = color.argb();
 
         textRenderer.draw(text, textX, textY, textColor, drawShadow, matrix, vertexConsumerProvider, false, 0, 15728880);
         vertexConsumerProvider.draw();
@@ -71,10 +66,7 @@ public class TextParticle extends Particle {
 
     public static class Builder {
         Text text = Text.empty();
-        float alpha = 1.0f;
-        float red = 1.0f;
-        float green = 1.0f;
-        float blue = 1.0f;
+        Color color;
         float velocityMultiplier = 0.95f;
         float gravityStrength = 0.8f;
         int maxAge = 30;
@@ -86,14 +78,7 @@ public class TextParticle extends Particle {
         }
 
         public Builder color(Color color) {
-            return color(color.getAlpha(), color.getRed(), color.getGreen(), color.getBlue());
-        }
-
-        public Builder color(float alpha, float red, float green, float blue) {
-            this.alpha = alpha;
-            this.red = red;
-            this.green = green;
-            this.blue = blue;
+            this.color = color;
             return this;
         }
 
@@ -132,7 +117,7 @@ public class TextParticle extends Particle {
         }
 
         public TextParticle build(ClientWorld world, Vec3d pos, Vec3d velocity) {
-            return new TextParticle(world, pos, velocity, text, alpha, red, green, blue, velocityMultiplier, gravityStrength, maxAge, scale, drawShadow);
+            return new TextParticle(world, pos, velocity, text, color, velocityMultiplier, gravityStrength, maxAge, scale, drawShadow);
         }
     }
 }

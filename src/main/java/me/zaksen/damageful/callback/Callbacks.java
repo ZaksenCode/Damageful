@@ -1,13 +1,13 @@
 package me.zaksen.damageful.callback;
 
-import me.zaksen.damageful.color.CustomColor;
+import io.wispforest.owo.ui.core.Color;
 import me.zaksen.damageful.number.TextParticle;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.Vec3d;
 
-import static me.zaksen.damageful.client.DamagefulClient.OPTIONS_DATA;
+import static me.zaksen.damageful.client.DamagefulClient.CONFIG;
 
 public class Callbacks {
 
@@ -17,7 +17,7 @@ public class Callbacks {
 
     private void registerDamageCallback() {
         EntityDamagedCallback.EVENT.register(((entity, damage) -> {
-            if(!OPTIONS_DATA.isEnabled()) {
+            if(!CONFIG.enabled()) {
                 return ActionResult.PASS;
             }
 
@@ -27,11 +27,11 @@ public class Callbacks {
                 return ActionResult.PASS;
             }
 
-            if(entity == client.player && !OPTIONS_DATA.isShowSelfDamage() ) {
+            if(entity == client.player && !CONFIG.showSelfDamage() ) {
                 return ActionResult.PASS;
             }
 
-            if(client.player.distanceTo(entity) > OPTIONS_DATA.getMaxDistance()) {
+            if(client.player.distanceTo(entity) > CONFIG.maxDistance()) {
                 return ActionResult.PASS;
             }
 
@@ -39,35 +39,29 @@ public class Callbacks {
             float damagePercentage = (float) Math.floor(damageScale * 100);
             String text = getText(damage, damagePercentage);
 
-            Vec3d particlePos = entity.getPos().add(OPTIONS_DATA.getOffset().x, entity.getHeight() + OPTIONS_DATA.getOffset().y, OPTIONS_DATA.getOffset().z);
-            Vec3d particleVelocity = OPTIONS_DATA.getVelocity();
+            Vec3d particlePos = entity.getPos().add(CONFIG.offset().x, entity.getHeight() + CONFIG.offset().y, CONFIG.offset().z);
+            Vec3d particleVelocity = CONFIG.velocity();
 
-            if(OPTIONS_DATA.isRandomVelocityXZ()) {
+            if(CONFIG.randomVelocityXZ()) {
                 double x = Math.random() * particleVelocity.x;
                 double z = Math.random() * particleVelocity.z;
                 particleVelocity = new Vec3d(x, particleVelocity.y, z);
             }
 
-            float velocityMultiplier = OPTIONS_DATA.getVelocityMultiplier();
-            float gravityStrength = OPTIONS_DATA.getGravityStrength();
-            int maxAge = OPTIONS_DATA.getLifeTime();
+            float velocityMultiplier = CONFIG.velocityMultiplier();
+            float gravityStrength = CONFIG.gravityStrength();
+            int maxAge = CONFIG.lifeTime();
 
-            CustomColor textColor = OPTIONS_DATA.getLowestDamageColor().gradient(OPTIONS_DATA.getHighestDamageColor(), damageScale);
+            Color textColor = CONFIG.lowestDamageColor().interpolate(CONFIG.highestDamageColor(), damageScale);
 
             TextParticle particle = TextParticle.create()
             .text(Text.of(text))
-            .color(
-                    textColor.getAlpha(),
-                    textColor.getRed(),
-                    textColor.getGreen(),
-                    textColor.getBlue()
-
-            )
+            .color(textColor)
             .velocityMult(velocityMultiplier)
             .gravityStrength(gravityStrength)
             .age(maxAge)
-            .scale(OPTIONS_DATA.getScale())
-            .shadow(OPTIONS_DATA.isDrawShadow())
+            .scale(CONFIG.scale())
+            .shadow(CONFIG.drawShadow())
             .build(client.world, particlePos, particleVelocity);
 
             client.particleManager.addParticle(particle);
@@ -79,18 +73,29 @@ public class Callbacks {
     private String getText(float damage, float damagePercentage) {
         String text;
 
-        if(OPTIONS_DATA.isShowPercentageText()) {
+        if(CONFIG.showPercentageText()) {
             String percenrageText = String.format("%.1f", damagePercentage);
             if(percenrageText.endsWith(".0")) {
                 percenrageText = percenrageText.substring(0, percenrageText.length() - 2);
             }
-            text = percenrageText + "%";
+
+            if (damage > 0) {
+                text =  percenrageText + "%";
+            } else {
+                text = "+" +  percenrageText + "%";
+            }
         } else {
             String roundedDamageText = String.format("%.1f", damage);
+
             if(roundedDamageText.endsWith(".0")) {
                 roundedDamageText = roundedDamageText.substring(0, roundedDamageText.length() - 2);
             }
-            text = roundedDamageText;
+
+            if (damage > 0) {
+                text = roundedDamageText;
+            } else {
+                text = "+" + roundedDamageText.substring(1);
+            }
         }
 
         return text;

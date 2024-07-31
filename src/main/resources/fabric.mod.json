@@ -16,9 +16,6 @@
   "entrypoints": {
     "client": [
       "me.zaksen.damageful.client.DamagefulClient"
-    ],
-    "modmenu": [
-      "me.zaksen.damageful.modmenu.ModmenuImpl"
     ]
   },
   "mixins": [
