@@ -52,7 +52,13 @@ public class Callbacks {
             float gravityStrength = CONFIG.gravityStrength();
             int maxAge = CONFIG.lifeTime();
 
-            Color textColor = CONFIG.lowestDamageColor().interpolate(CONFIG.highestDamageColor(), damageScale);
+            Color textColor;
+
+            if(damage > 0) {
+                textColor = CONFIG.lowestDamageColor().interpolate(CONFIG.highestDamageColor(), damageScale);
+            } else {
+                textColor = CONFIG.healColor();
+            }
 
             TextParticle particle = TextParticle.create()
             .text(Text.of(text))
